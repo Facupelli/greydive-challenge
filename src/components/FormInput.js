@@ -1,6 +1,6 @@
 import { handleOnChange } from "../utils/form";
 
-export default function FormInput({ item, setValues }) {
+export default function FormInput({ item, setValues, values }) {
   return (
     <>
       <label htmlFor={item.name}>{item.label}</label>
@@ -13,6 +13,7 @@ export default function FormInput({ item, setValues }) {
         required={item.required}
         name={item.name}
         id={item.name}
+        value={values[item.name]}
       />
     </>
   );

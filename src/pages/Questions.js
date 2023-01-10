@@ -1,19 +1,17 @@
-import { firestore } from "../firebase";
-import { addDoc, collection } from "@firebase/firestore";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
 import { useFetchItems } from "../hooks/useFetchItems";
+import { addUser } from "../utils/api";
 
 import FormInput from "../components/FormInput";
 import FormSelect from "../components/FormSelect";
 import FormSubmitBtn from "../components/FormSubmitBtn";
 import Nav from "../components/Nav";
 import Modal from "../components/Modal";
+import PageLayout from "../components/PageLayout";
 
 function Questions() {
-  const collectionRef = collection(firestore, "user_info");
-
   const { items } = useFetchItems();
 
   const [values, setValues] = useState({
@@ -28,10 +26,8 @@ function Questions() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(values);
-
     try {
-      await addDoc(collectionRef, values);
+      await addUser(values);
       setValues({
         full_name: "",
         email: "",
@@ -67,30 +63,36 @@ function Questions() {
           </div>
         </Modal>
       )}
-      <div className="bg-zinc-800 min-h-screen ">
-        <div className="max-w-2xl mx-auto pt-4">
-          <Nav route="questions" />
+      <PageLayout>
+        <Nav route="questions" />
 
-          {items.length > 0 && (
-            <form onSubmit={handleSubmit} className="pt-4">
-              {items.map((item) => (
-                <div
-                  key={item.label}
-                  className="bg-slate-50 p-4 my-2 rounded-sm flex flex-col gap-3 shadow-sm"
-                >
-                  {item.options && (
-                    <FormSelect item={item} setValues={setValues} />
-                  )}
-                  {!item.options && item.name && (
-                    <FormInput item={item} setValues={setValues} />
-                  )}
-                  {item.type === "submit" && <FormSubmitBtn item={item} />}
-                </div>
-              ))}
-            </form>
-          )}
-        </div>
-      </div>
+        {items.length > 0 && (
+          <form onSubmit={handleSubmit} className="pt-4">
+            {items.map((item) => (
+              <div
+                key={item.label}
+                className="bg-slate-50 p-4 my-2 rounded-sm flex flex-col gap-3 shadow-sm"
+              >
+                {item.options && (
+                  <FormSelect
+                    item={item}
+                    setValues={setValues}
+                    values={values}
+                  />
+                )}
+                {!item.options && item.name && (
+                  <FormInput
+                    item={item}
+                    setValues={setValues}
+                    values={values}
+                  />
+                )}
+                {item.type === "submit" && <FormSubmitBtn item={item} />}
+              </div>
+            ))}
+          </form>
+        )}
+      </PageLayout>
     </>
   );
 }
