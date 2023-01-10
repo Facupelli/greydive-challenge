@@ -10,16 +10,16 @@ function Answers() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getAllInfo = async () => {
+    const getAllUsers = async () => {
       const querySnapshot = await getUsers();
-      const docs = [];
-      querySnapshot.forEach((doc) => {
-        docs.push({ ...doc.data(), id: doc.id });
-      });
+      const docs = querySnapshot.docs.map((doc) => ({
+        ...doc.data(),
+        id: doc.id,
+      }));
       setAnswers(docs);
     };
 
-    getAllInfo();
+    getAllUsers();
     setLoading(false);
   }, []);
 

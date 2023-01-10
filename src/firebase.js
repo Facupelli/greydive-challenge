@@ -2,7 +2,7 @@ import { initializeApp } from "firebase/app";
 import { getFirestore } from "@firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDKzGQB2MmnrNVfD-OBgKZ2NHlABqkNohE",
+  apiKey: process.env.API_KEY,
   authDomain: "greydive-challenge-8a72f.firebaseapp.com",
   projectId: "greydive-challenge-8a72f",
   storageBucket: "greydive-challenge-8a72f.appspot.com",

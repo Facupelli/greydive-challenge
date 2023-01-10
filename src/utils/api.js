@@ -1,7 +1,15 @@
 import { firestore } from "../firebase";
-import { collection, getDocs, addDoc } from "@firebase/firestore";
+import {
+  collection,
+  getDocs,
+  addDoc,
+  orderBy,
+  query,
+} from "@firebase/firestore";
 
-export const getUsers = () => getDocs(collection(firestore, "user_info"));
+const userInfoRef = collection(firestore, "user_info");
 
-export const addUser = (values) =>
-  addDoc(collection(firestore, "user_info"), values);
+export const getUsers = () =>
+  getDocs(query(userInfoRef, orderBy("created_at")));
+
+export const addUser = (values) => addDoc(userInfoRef, values);

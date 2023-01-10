@@ -1,3 +1,4 @@
+import { Timestamp } from "@firebase/firestore";
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
@@ -27,7 +28,7 @@ function Questions() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addUser(values);
+      await addUser({ ...values, created_at: Timestamp.fromDate(new Date()) });
       setValues({
         full_name: "",
         email: "",
