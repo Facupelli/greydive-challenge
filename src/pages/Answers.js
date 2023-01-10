@@ -36,24 +36,24 @@ function Answers() {
         <div className="pt-4">
           <AnswerCard
             question="Nombre Completo:"
-            answer={answers[0].full_name}
+            answer={answers.at(-1).full_name}
           />
           <AnswerCard
             question="Correo Electrónico:"
-            answer={answers[0].email}
+            answer={answers.at(-1).email}
           />
           <AnswerCard
             question="Fecha de Nacimiento:"
-            answer={answers[0].birth_date}
+            answer={answers.at(-1).birth_date}
           />
           <AnswerCard
             question="País de origen:"
-            answer={answers[0].country_of_origin}
+            answer={answers.at(-1).country_of_origin}
           />
           <AnswerCard
             question="Términos y condiciones:"
             answer={
-              answers[0].terms_and_conditions ? "ACEPTADOS" : "RECHAZADOS"
+              answers.at(-1).terms_and_conditions ? "ACEPTADOS" : "RECHAZADOS"
             }
           />
         </div>
